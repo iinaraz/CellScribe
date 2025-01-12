@@ -39,7 +39,7 @@ scikit-learn
 pip install -r requirements.txt
 ```
 ```
-git clone https://github.com/iinaraz/CellScribe
+git clone https://github.com/iinaraz/CellScribe.git
 ```
 
 ## Input
