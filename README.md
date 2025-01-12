@@ -67,7 +67,7 @@ python CellScribe.py <filename>
 ```
 
 ## Output
-A table with columns <Celltype> <Marker> <Value>
+A table with columns Celltype, Marker and Value
 
 The value will describe the strength of the specific molecule as a signature marker based on the features analyzed.
 
