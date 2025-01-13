@@ -35,6 +35,10 @@ scikit-learn
 
 5. Consensus signature - combine signature hits from each approach to establish a robust signature for each cell type
 
+### Other features to be included:
+Creating a folder for the analysis results
+Saving QC plots from each step of the signature generation
+
 # Execution
 ## Installation
 ```
