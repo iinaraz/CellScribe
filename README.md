@@ -1,5 +1,5 @@
 # CellScribe
-Generation of molecular signatures for cell types from sorted cell data
+Generation of molecular signatures for cell populations
 
 # Introduction
 Cellular signatures are sets of molecular markers that describe or characterize a specific cell type and are used to resolve cell types from complex data, identify cell types, and analyze the differential expression of cell type-specific molecules in different conditions. This program will receive a processed expression matrix of several sorted cell population samples and output a set of molecules that characterize each cell type that appears in the matrix.
