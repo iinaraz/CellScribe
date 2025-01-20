@@ -35,26 +35,6 @@ scipy
 scikit-learn
 ```
 
-## Function hierarchy (Algorithm)
-
-1. Generating a new folder for the project named "CellScribe_<date_and_time>"
-2. Reading in the input expression matrix and sample information matrix provided by the user
-
-### Features to include:
-
-Creating a folder for the analysis results
-
-Saving QC plots from each step of the signature generation
-
-# Execution
-## Installation
-```
-pip install -r requirements.txt
-```
-```
-git clone https://github.com/iinaraz/CellScribe.git
-```
-
 ## Input
 Expression matrix - first column is gene/protein/feature names, other columns are samples
 Name|CellType_A_1|CellType_A_2|CellType_A_3|CellType_B_1|CellType_B_2|CellType_B_3|CellType_C_1|CellType_C_2|CellType_C_3
@@ -83,6 +63,31 @@ Celltype_B_3|B
 Celltype_C_1|C
 Celltype_C_2|C
 Celltype_C_3|C
+
+
+## Function hierarchy (Algorithm)
+
+1. Generating a new folder for the project named "CellScribe_<date_and_time>"
+2. Reading in the input expression matrix and sample information matrix provided by the user
+3. Hierarchical clustering (top clustering features per population are selected)
+4. Principal component analysis (top PC markers per population are selected)
+5. Differential expression (DE) analysis (One vs one DE analysis with two-sample t-test, selection of highly upregulated molecules per population)
+6. Merging the output from (3-5) and selecting the marker consensus for each population. Output -> Marker list (Cellular signature) for each population
+
+### Features to include:
+
+Creating a folder for the analysis results
+
+Saving QC plots from each step of the signature generation
+
+# Execution
+## Installation
+```
+pip install -r requirements.txt
+```
+```
+git clone https://github.com/iinaraz/CellScribe.git
+```
 
 ## Running the program
 ```
