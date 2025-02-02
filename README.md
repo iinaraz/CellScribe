@@ -89,6 +89,9 @@ python cellscribe.py --help
 python cellscribe.py --data PATH_TO_EXPRESSION_MATRIX --populations PATH_TO_POPULATION_INFO --n_markers N_MARKERS --fc_threshold LOG2_FC_THRESHOLD --pval_threshold ADJUSTED_PVALUE_THRESHOLD
 ```
 
+Initiating CellScribe will create a folder in the current directory and store the results (see Output) in the directory.
+
+
 ## Running with example data
 
 Testing the tool is possible by using files in the [data](https://github.com/iinaraz/CellScribe/tree/main/data) folder.
@@ -108,8 +111,12 @@ Parameters for arguments n_markers, fc_threshold and pval_threshold can be adjus
 
 
 ## Output
+
 A table with markers for each population and their differential expression results
+
 Volcano plot of differential expression results for each population with selected markers labeled
+
+Settings used in the analysis will be saved in settings.yaml in the results folder
 
 ## Information
 
