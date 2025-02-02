@@ -1,3 +1,12 @@
+
+
+  █████  █████  ██     ██     ██████  ██████  █████   ███  █████  █████
+ ██      ██     ██     ██     ██      ██      █   █    █   █   █  ██   
+ ██      █████  ██     ██     ██████  ██      █████    █   █████  █████ 
+ ██      ██     ██     ██         ██  ██      █  █     █   █   █  ██   
+  █████  █████  █████  █████  ██████  ██████  █   █   ███  █████  █████
+
+
 # CellScribe
 Generation of molecular signatures for cell populations
 
@@ -10,34 +19,30 @@ The program is meant to be used when cell type-specific expression information i
 
 ## Signature generation details
 
-The signature is built from features that separate each population from the background. These features include:
-1. Molecules driving hierarchical clustering (Top molecules differentiating the cluster)
-2. Principal components of the population that separate it from the other populations
-3. Differential expression analysis (two-sample t-test across all molecules in the data frame) between populations to determine highly upregulated markers for each population
+The signature is built from differential expression results that compares the expression values of one population to the average of the background (rest of the populations).
 
-Once the set of markers is determined for each feature (1-3), final list of signature markers for a population is selected by selecting the consensus (overlapping markers) across the features.
+Upregulated markers for the specific population are chosen based on the default or user generated parameters.
+
+*Default thresholds:*
+Number of markers: 30
+Log2 fold change: 0
+Adjusted p-value: 0.05
 
 The signature generation will be executed for all populations in the input matrix iteratively, so a table of molecular signatures will be available for all input populations.
 
 ## Requirements
 ### Input requirements
-The user should be able to provide an expression matrix for the program with sorted cell populations
+The user should be able to provide an expression matrix for the program with sorted cell populations.
+
+The expression matrix has to contain a column `Identifier` as the first column of the matrix to identify the molecules.
+The population file has to contains columns `Label` and `Population` where `Label` maps to the column names of the expression matrix.
 
 ### Software requirements
 Python 3.7 ->
 
-### Packages
-```
-pandas
-numpy
-itertools
-scipy
-scikit-learn
-```
-
 ## Input
-Expression matrix - first column is gene/protein/feature names, other columns are samples
-Name|CellType_A_1|CellType_A_2|CellType_A_3|CellType_B_1|CellType_B_2|CellType_B_3|CellType_C_1|CellType_C_2|CellType_C_3
+Expression matrix - first column is gene/protein/feature names (Identifier), other columns are samples
+Identifier|CellType_A_1|CellType_A_2|CellType_A_3|CellType_B_1|CellType_B_2|CellType_B_3|CellType_C_1|CellType_C_2|CellType_C_3
 ---|---|---|---|---|---|---|---|---|---
 Protein_1|6.87|9.95|3.59|2.41|12.50|14.51|10.35|10.55|14.23	
 Protein_2|14.36|3.81|8.44|10.27|13.65|5.27|3.09|9.39|14.40	
@@ -51,7 +56,7 @@ Protein_9|9.81|9.70|9.11|4.97|2.09|2.67|2.07|13.60|14.53
 Protein_10|11.20|2.60|4.40|3.00|8.64|5.62|4.09|10.20|13.09
 
 Sample metadata
-A csv file that indicates the labels (same as column names of the expression matrix) and maps populations in which each sample belong to.
+A csv file that indicates the labels (same as column names of the expression matrix) and maps populations in which group/population each sample belongs to.
 Label|Population
 ---|---
 Celltype_A_1|A
@@ -63,22 +68,6 @@ Celltype_B_3|B
 Celltype_C_1|C
 Celltype_C_2|C
 Celltype_C_3|C
-
-
-## Function hierarchy (Algorithm)
-
-1. Generating a new folder for the project named "CellScribe_<date_and_time>"
-2. Reading in the input expression matrix and sample information matrix provided by the user
-3. Hierarchical clustering (top clustering features per population are selected)
-4. Principal component analysis (top PC markers per population are selected)
-5. Differential expression (DE) analysis (One vs one DE analysis with two-sample t-test, selection of highly upregulated molecules per population)
-6. Merging the output from (3-5) and selecting the marker consensus for each population. Output -> Marker list (Cellular signature) for each population
-
-### Features to include:
-
-Creating a folder for the analysis results
-
-Saving QC plots from each step of the signature generation
 
 # Execution
 ## Installation
@@ -95,11 +84,12 @@ git clone https://github.com/iinaraz/CellScribe.git
 cd <path_to_repository>
 
 # Run CellScribe from command line
-python CellScribe.py <filename>
+python CellScribe.py --data PATH_TO_EXPRESSION_MATRIX --populations PATH_TO_POPULATION_INFO --n_markers N_MARKERS --fc_threshold LOG2_FC_THRESHOLD --pval_threshold ADJUSTED_PVALUE_THRESHOLD
 ```
 
 ## Output
-A table with columns Celltype and Marker
+A table with markers for each population and their differential expression results
+Volcano plot of differential expression results for each population with selected markers labeled
 
 ## Information
 
