@@ -104,7 +104,7 @@ The data is a subset of sorted immune cell populations analyzed by mass spectrom
 To run the program with the example data, follow the steps for requirements installation and clone the repository as described above. Then run:
 
 ```
-python cellscribe.py "data/proteins_subset.csv" --populations "data/sample_info.csv"
+python cellscribe.py --data "data/proteins_subset.csv" --populations "data/sample_info.csv"
 ```
 
 Parameters for arguments n_markers, fc_threshold and pval_threshold can be adjusted by choice.
