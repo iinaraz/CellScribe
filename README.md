@@ -18,9 +18,12 @@ The signature is built from differential expression results that compares the ex
 Upregulated markers for the specific population are chosen based on the default or user generated parameters.
 
 *Default thresholds:*
-Number of markers: 30/n
-Log2 fold change: 0/n
-Adjusted p-value: 0.05/n
+
+Number of markers: 30
+
+Log2 fold change: 0
+
+Adjusted p-value: 0.05
 
 The signature generation will be executed for all populations in the input matrix iteratively, so a table of molecular signatures will be available for all input populations.
 
@@ -35,7 +38,7 @@ The population file has to contains columns `Label` and `Population` where `Labe
 Python 3.7 ->
 
 ## Input
-Expression matrix - first column is gene/protein/feature names (Identifier), other columns are samples
+Expression matrix - first column is gene/protein/feature names (Identifier), other columns are samples.
 Identifier|CellType_A_1|CellType_A_2|CellType_A_3|CellType_B_1|CellType_B_2|CellType_B_3|CellType_C_1|CellType_C_2|CellType_C_3
 ---|---|---|---|---|---|---|---|---|---
 Protein_1|6.87|9.95|3.59|2.41|12.50|14.51|10.35|10.55|14.23	
@@ -68,6 +71,8 @@ Celltype_C_3|C
 ```
 pip install -r requirements.txt
 ```
+Navigate to the parent directory where you wish your CellScribe to be
+
 ```
 git clone https://github.com/iinaraz/CellScribe.git
 ```
@@ -77,15 +82,38 @@ git clone https://github.com/iinaraz/CellScribe.git
 # Navigate to the CellScribe repository
 cd <path_to_repository>
 
+# See argument information by running
+python cellscribe.py --help
+
 # Run CellScribe from command line
-python CellScribe.py --data PATH_TO_EXPRESSION_MATRIX --populations PATH_TO_POPULATION_INFO --n_markers N_MARKERS --fc_threshold LOG2_FC_THRESHOLD --pval_threshold ADJUSTED_PVALUE_THRESHOLD
+python cellscribe.py --data PATH_TO_EXPRESSION_MATRIX --populations PATH_TO_POPULATION_INFO --n_markers N_MARKERS --fc_threshold LOG2_FC_THRESHOLD --pval_threshold ADJUSTED_PVALUE_THRESHOLD
 ```
+
+## Running with example data
+
+Testing the tool is possible by using files in the [data](https://github.com/iinaraz/CellScribe/tree/main/data) folder.
+
+Data published by:
+Rieckmann JC, Geiger R, Hornburg D, Wolf T, Kveler K, Jarrossay D, Sallusto F, Shen-Orr SS, Lanzavecchia A, Mann M, Meissner F. Social network architecture of human immune cells unveiled by quantitative proteomics. Nat Immunol. 2017 May;18(5):583-593. doi: 10.1038/ni.3693. Epub 2017 Mar 6. PMID: 28263321.
+
+The data is a subset of sorted immune cell populations analyzed by mass spectrometry-based proteomics.
+
+To run the program with the example data, follow the steps for requirements installation and clone the repository as described above. Then run:
+
+```
+python cellscribe.py "data/proteins_subset.csv" --populations "data/sample_info.csv"
+```
+
+Parameters for arguments n_markers, fc_threshold and pval_threshold can be adjusted by choice.
+
 
 ## Output
 A table with markers for each population and their differential expression results
 Volcano plot of differential expression results for each population with selected markers labeled
 
 ## Information
+
+For more detailed inspection of the program, see [Jupyter notebook](https://github.com/iinaraz/CellScribe/blob/main/cellscribe.ipynb).
 
 This program and the Github repository was written by Iina Raz. The project was done as a part of a [Python Programming Course](https://github.com/szabgab/wis-python-course-2024-11) at the Weizmann Institute of Science.
 
