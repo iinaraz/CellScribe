@@ -1,11 +1,5 @@
 
-
-  █████  █████  ██     ██     ██████  ██████  █████   ███  █████  █████
- ██      ██     ██     ██     ██      ██      █   █    █   █   █  ██   
- ██      █████  ██     ██     ██████  ██      █████    █   █████  █████ 
- ██      ██     ██     ██         ██  ██      █  █     █   █   █  ██   
-  █████  █████  █████  █████  ██████  ██████  █   █   ███  █████  █████
-
+<img src="CellScribe_logo.png" alt="Logo" width="600"/>
 
 # CellScribe
 Generation of molecular signatures for cell populations
@@ -15,7 +9,7 @@ Cellular signatures are sets of molecular markers that describe or characterize 
 
 The program is meant to be used when cell type-specific expression information is available (e.g., sorted cell populations or single-cell data). The signatures are calculated based on the background of the other populations.
 
-<img src="CellScribe.png" alt="Cell signature concept image" width="600"/>
+<img src="CellScribe.png" alt="Cell signature concept image" width="800"/>
 
 ## Signature generation details
 
@@ -24,9 +18,9 @@ The signature is built from differential expression results that compares the ex
 Upregulated markers for the specific population are chosen based on the default or user generated parameters.
 
 *Default thresholds:*
-Number of markers: 30
-Log2 fold change: 0
-Adjusted p-value: 0.05
+Number of markers: 30/n
+Log2 fold change: 0/n
+Adjusted p-value: 0.05/n
 
 The signature generation will be executed for all populations in the input matrix iteratively, so a table of molecular signatures will be available for all input populations.
 
