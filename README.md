@@ -17,7 +17,7 @@ The signature is built from differential expression results that compares the ex
 
 Upregulated markers for the specific population are chosen based on the default or user-generated parameters.
 
-*Default thresholds:*
+**Default parameters:**
 
 Number of markers: 30
 
@@ -71,11 +71,16 @@ Celltype_C_3|C
 ```
 pip install -r requirements.txt
 ```
-Navigate to the parent directory where you wish your CellScribe to be
+Navigate to the parent directory where you wish your CellScribe tool to be
+
+Open git bash and run:
 
 ```
 git clone https://github.com/iinaraz/CellScribe.git
 ```
+
+Alternatively, download the folder as a zip -file from the [CellScribe Github](https://github.com/iinaraz/CellScribe) --> <>Code --> Download ZIP
+
 
 ## Running the program
 ```
@@ -94,21 +99,25 @@ Initiating CellScribe will create a folder in the current directory and store th
 
 ## Running with example data
 
-Testing the tool is possible by using files in the [data](https://github.com/iinaraz/CellScribe/tree/main/data) folder.
-
-Data published by:
-Rieckmann JC, Geiger R, Hornburg D, Wolf T, Kveler K, Jarrossay D, Sallusto F, Shen-Orr SS, Lanzavecchia A, Mann M, Meissner F. Social network architecture of human immune cells unveiled by quantitative proteomics. Nat Immunol. 2017 May;18(5):583-593. doi: 10.1038/ni.3693. Epub 2017 Mar 6. PMID: 28263321.
-
-The data is a subset of sorted immune cell populations analyzed by mass spectrometry-based proteomics.
-
 To run the program with the example data, follow the steps for requirements installation and clone the repository as described above. Then run:
 
 ```
 python cellscribe.py --data "data/proteins_subset.csv" --populations "data/sample_info.csv"
 ```
 
-Parameters for arguments n_markers, fc_threshold and pval_threshold can be adjusted by choice.
+Parameters for arguments n_markers, fc_threshold and pval_threshold can be adjusted by choice, for example:
 
+```
+python cellscribe.py --data "data/proteins_subset.csv" --populations "data/sample_info.csv" --n_markers 40 --fc_threshold 0.5 --pval_threshold 0.01
+```
+
+The example files are located in the [data](https://github.com/iinaraz/CellScribe/tree/main/data) folder.
+
+Data published by:
+
+Rieckmann JC, Geiger R, Hornburg D, Wolf T, Kveler K, Jarrossay D, Sallusto F, Shen-Orr SS, Lanzavecchia A, Mann M, Meissner F. Social network architecture of human immune cells unveiled by quantitative proteomics. Nat Immunol. 2017 May;18(5):583-593. doi: 10.1038/ni.3693. Epub 2017 Mar 6. PMID: 28263321.
+
+The data is a subset of sorted immune cell populations analyzed by mass spectrometry-based proteomics.
 
 ## Output
 
@@ -116,11 +125,14 @@ A table with markers for each population and their differential expression resul
 
 Volcano plot of differential expression results for each population with selected markers labeled
 
-Settings used in the analysis will be saved in settings.yaml in the results folder
+Settings used in the analysis will be saved in settings.yaml in the results folder.
 
 ## Information
 
 For more detailed inspection of the program, see [Jupyter notebook](https://github.com/iinaraz/CellScribe/blob/main/cellscribe.ipynb).
 
 This program and the Github repository was written by Iina Raz. The project was done as a part of a [Python Programming Course](https://github.com/szabgab/wis-python-course-2024-11) at the Weizmann Institute of Science.
+
+
+
 
