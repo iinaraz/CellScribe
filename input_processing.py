@@ -38,6 +38,10 @@ def extract_input_data(expression_file_path, population_file_path):
     if not required_columns.issubset(populations.columns):
         missing = required_columns - set(populations.columns)
         raise ValueError(f"Error: The 'populations' DataFrame is missing the following required columns: {missing}")
+    
+    # Check that there's at least two populations (so differential expression analysis can be performed)
+    if len(populations['Population'].unique()) < 2:
+        raise ValueError("Only one population detected. The minimum number of populations is two.")
 
     # Column names 1:ncol(data) should match to a group in populations
     matching_labels = populations["Label"].isin(data.columns[1:])
