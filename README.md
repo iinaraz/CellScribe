@@ -2,12 +2,12 @@
 <img src="CellScribe_logo.PNG" alt="Logo" width="600"/>
 
 # CellScribe
-Generation of molecular signatures for cell populations
+Generation of molecular signatures for pre-determined populations
 
 # Introduction
-Cellular signatures are sets of molecular markers that describe or characterize a specific cell type and are used to resolve cell types from complex data, identify cell types, and analyze the differential expression of cell type-specific molecules in different conditions. This program will receive a processed expression matrix of several sorted cell population samples and output a set of molecules that characterize each cell type that appears in the matrix.
+Cellular signatures are sets of molecular markers that describe or characterize a specific cell type and are used to resolve cell types from complex data, identify cell types, and analyze the differential expression of cell type-specific molecules in different conditions. This program will receive a processed expression matrix of several sorted cell population samples and output a set of molecules that characterize each cell type that appears in the matrix. The program can be used also to determine markers for populations differing in condition, treatment etc. 
 
-The program is meant to be used when cell type-specific expression information is available (e.g., sorted cell populations or single-cell data). The signatures are calculated based on the background of the other populations.
+The program is meant to be used when cell type or otherwise population-specific expression information is available (e.g., sorted cell populations or single-cell data). The signatures are calculated based on the background of the other populations.
 
 <img src="CellScribe.png" alt="Cell signature concept image" width="800"/>
 
@@ -15,7 +15,7 @@ The program is meant to be used when cell type-specific expression information i
 
 The signature is built from differential expression results that compares the expression values of one population to the average of the background (rest of the populations).
 
-Upregulated markers for the specific population are chosen based on the default or user generated parameters.
+Upregulated markers for the specific population are chosen based on the default or user-generated parameters.
 
 *Default thresholds:*
 
