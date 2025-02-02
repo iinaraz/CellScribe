@@ -27,6 +27,8 @@ def main():
 
 """
 
+    # Print logo
+    print(logo)
 
     # Create parser
     parser = argparse.ArgumentParser(description= logo + "\nCellScribe generates differential expression -based marker signatures for predetermined populations using expression data from high-throughput technologies such as mass spectrometry based proteomics, single-cell RNA sequencing or RNA sequencing.",
@@ -73,9 +75,6 @@ def main():
     populations = input[1]
 
     # ------------------ GENERATE SIGNATURES -------------------
-
-    # Print logo
-    print(logo)
 
     # Differential expression analysis one vs rest
     DE_results = population_differential_expression(data, populations, output_dir=res_path, n_top_markers=n_markers, fc_threshold=fc_threshold, pval_threshold=pval_threshold)

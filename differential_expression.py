@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from adjustText import adjust_text
 from tqdm import tqdm
+import warnings
 
 def population_differential_expression(data, population_mapping, output_dir, n_top_markers, fc_threshold, pval_threshold):
 
@@ -74,20 +75,26 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
         )
 
         # ---------- Section 2.3: Select top upregulated markers ------------------------------------
-        # Select upregulated proteins as markers
-        significant_results = results_df[results_df['Threshold'] == 'Up']
+        if len(results_df['Threshold']=='Up') > 0:
 
-        # Sort by Log2 Fold Change (descending) and p-value (ascending)
-        top_markers_df = significant_results.sort_values(by=['Log2FoldChange', 'PAdjusted'], ascending=[False, True])
+            # Select upregulated proteins as markers
+            significant_results = results_df[results_df['Threshold'] == 'Up']
 
-        # Select the top n proteins if there's enough:
-        if significant_results.shape[0] >= n_top_markers:
+            # Sort by Log2 Fold Change (descending) and p-value (ascending)
             top_markers_df = significant_results.sort_values(by=['Log2FoldChange', 'PAdjusted'], ascending=[False, True])
-            selected_markers = top_markers_df.head(n_top_markers)
 
-        # And if there aren't enough:
+            # Select the top n proteins if there's enough:
+            if significant_results.shape[0] >= n_top_markers:
+                top_markers_df = significant_results.sort_values(by=['Log2FoldChange', 'PAdjusted'], ascending=[False, True])
+                selected_markers = top_markers_df.head(n_top_markers)
+
+            # And if there aren't enough:
+            else:
+                selected_markers = significant_results
+                warnings.warn(f"Population {target_group} has less significant hits than the selected number of markers.", UserWarning)
+
         else:
-            selected_markers = significant_results
+            warnings.warn(f"Population {target_group} failed to generate a signature. No significant hits.", UserWarning)
 
         selected_markers['Population']=group
 
