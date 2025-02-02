@@ -1,5 +1,5 @@
 
-<img src="CellScribe_logo.png" alt="Logo" width="600"/>
+<img src="CellScribe_logo.PNG" alt="Logo" width="600"/>
 
 # CellScribe
 Generation of molecular signatures for cell populations
