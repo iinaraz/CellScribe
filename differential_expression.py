@@ -96,6 +96,7 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
         else:
             warnings.warn(f"Population {target_group} failed to generate a signature. No significant hits.", UserWarning)
 
+        selected_markers=selected_markers.copy()
         selected_markers['Population']=group
 
         # ------------- Section 2.4: Plot a volcanoplot ----------------------------------------------

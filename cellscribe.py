@@ -7,9 +7,6 @@ import argparse
 import pandas as pd
 import yaml
 
-# Suppress all warnings
-warnings.filterwarnings("ignore")
-
 def main():
 
     # Create output directory for results
@@ -27,11 +24,8 @@ def main():
 
 """
 
-    # Print logo
-    print(logo)
-
     # Create parser
-    parser = argparse.ArgumentParser(description= logo + "\nCellScribe generates differential expression -based marker signatures for predetermined populations using expression data from high-throughput technologies such as mass spectrometry based proteomics, single-cell RNA sequencing or RNA sequencing.",
+    parser = argparse.ArgumentParser(description= "\nCellScribe generates differential expression -based marker signatures for predetermined populations using expression data from high-throughput technologies such as mass spectrometry based proteomics, single-cell RNA sequencing or RNA sequencing.",
                                      formatter_class=argparse.RawTextHelpFormatter)  # Preserves formatting)
 
     # Add argument for expression matrix file and celltypes
@@ -66,6 +60,9 @@ def main():
 
     with open(param_file_path, "w") as file:
         yaml.dump(settings, file)
+
+    # Print logo
+    print(logo)
 
     # -------------------- LOAD DATA --------------------------
     # Load data
