@@ -5,7 +5,7 @@
 Generation of molecular signatures for pre-determined populations
 
 # Introduction
-Cellular signatures are sets of molecular markers that describe or characterize a specific cell type and are used to resolve cell types from complex data, identify cell types, and analyze the differential expression of cell type-specific molecules in different conditions. This program will receive a processed expression matrix of several sorted cell population samples and output a set of molecules that characterize each cell type that appears in the matrix. The program can be used also to determine markers for populations differing in condition, treatment etc. 
+Cellular signatures are sets of molecular markers that describe or characterize a specific cell type and are used to resolve cell types from complex data, identify key molecules that drive cell-specific functions, and analyze the differential expression of cell type-specific molecules in different conditions. This program will receive a processed expression matrix of several sorted cell population samples and output a set of molecules that characterize each cell type that appears in the matrix. The program can be used also to determine markers for populations differing in condition, treatment etc. 
 
 The program is meant to be used when cell type or otherwise population-specific expression information is available (e.g., sorted cell populations or single-cell data). The signatures are calculated based on the background of the other populations.
 
@@ -24,6 +24,8 @@ Number of markers: 30
 Log2 fold change: 0
 
 Adjusted p-value: 0.05
+
+log2 Transform: False
 
 The signature generation will be executed for all populations in the input matrix iteratively, so a table of molecular signatures will be available for each input population.
 
@@ -96,9 +98,6 @@ git clone https://github.com/iinaraz/CellScribe.git
 Alternatively, download the folder as a zip -file from the [CellScribe Github](https://github.com/iinaraz/CellScribe) --> <>Code --> Download ZIP
 
 
-Or, alternatively, download ZIP from Github:
-CellScribe --> <> Code --> Download ZIP
-
 Navigate to the CellScribe directory
 
 ```
@@ -116,8 +115,8 @@ pip install -r requirements.txt
 **To run the program with example data, see `Running with example data`**
 
 ```
-# Navigate to the CellScribe repository
-cd <path_to_repository>
+# Navigate to the CellScribe directory
+cd <path_to_CellScribe_directory>
 
 # See argument information by running
 python cellscribe.py --help
@@ -144,6 +143,8 @@ Initiating CellScribe will create a folder in the current directory and store th
 
 Note: `--data DATA_PATH` and `--populations POPULATIONS_PATH` are REQUIRED. Other parameters have default options and are optional.
 
+<img src="running_cellscribe_2.PNG" alt="CellScribe Terminal View" width="800"/>
+
 ## Running with example data
 
 To run the program with the example data, follow the steps for requirements installation and clone the repository as described above. Then run:
@@ -164,24 +165,16 @@ Data published by:
 
 Rieckmann JC, Geiger R, Hornburg D, Wolf T, Kveler K, Jarrossay D, Sallusto F, Shen-Orr SS, Lanzavecchia A, Mann M, Meissner F. Social network architecture of human immune cells unveiled by quantitative proteomics. Nat Immunol. 2017 May;18(5):583-593. doi: 10.1038/ni.3693. Epub 2017 Mar 6. PMID: 28263321.
 
-The data is a subset of sorted immune cell populations analyzed by mass spectrometry-based proteomics.
-
-To run the program with the example data, follow the steps for requirements installation and clone the repository as described above in `Execution`. Then run:
-
-```
-python cellscribe.py --data "data/proteins_subset.csv" --populations "data/sample_info.csv"
-```
-
-Parameters for arguments n_markers, fc_threshold and pval_threshold can be adjusted by choice.
-
+Rieckmann et al. used quantitative proteomics to map the interactions between human immune cells, revealing a "social network" of immune communication based on secreted and surface proteins. By integrating mass spectrometry data with computational analysis, they identified key hubs and pathways that coordinate immune responses. This study provides a systems-level view of immune cell crosstalk, highlighting how different cell types dynamically regulate each other in health and disease.
+*ChatGPT generated summary*
 
 ## Output
 
-A table with markers for each population and their differential expression results
+A table with markers for each population and their differential expression results (signatures.csv)
 
 Volcano plot of differential expression results for each population with selected markers labeled
 
-Settings used in the analysis will be saved in settings.yaml in the results folder.
+Settings used in the analysis will be saved in settings.yaml in the results folder
 
 ## Information
 
