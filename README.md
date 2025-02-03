@@ -1,5 +1,5 @@
 
-<img src="CellScribe_logo.PNG" alt="Logo" width="600"/>
+<img src="CellScribe_logo.PNG" alt="Logo" width="800"/>
 
 # CellScribe
 Generation of molecular signatures for pre-determined populations
@@ -25,17 +25,33 @@ Log2 fold change: 0
 
 Adjusted p-value: 0.05
 
-The signature generation will be executed for all populations in the input matrix iteratively, so a table of molecular signatures will be available for all input populations.
+The signature generation will be executed for all populations in the input matrix iteratively, so a table of molecular signatures will be available for each input population.
 
 ## Requirements
 ### Input requirements
-The user should be able to provide an expression matrix for the program with sorted cell populations.
+The user should be able to provide an expression matrix for the program with distinct populations (e.g. sorted cell populations, deconvoluted populations or populations resolved from single-cell data).
 
 The expression matrix has to contain a column `Identifier` as the first column of the matrix to identify the molecules.
 The population file has to contains columns `Label` and `Population` where `Label` maps to the column names of the expression matrix.
 
+### Assumptions
+The default assumption is that the expression values are log2 transformed. If your data is not log2 transformed, you can enable the differential expression log2 fold change results by setting `--log2_transform=True`. This makes sure that your fold changes are returned in log2 format.
+
 ### Software requirements
 Python 3.7 ->
+
+### Packages
+```
+adjustText==1.3.0
+matplotlib==3.10.0
+numpy==2.2.2
+pandas==2.2.3
+PyYAML==6.0.2
+scipy==1.15.1
+seaborn==0.13.2
+statsmodels==0.14.4
+tqdm==4.67.1
+```
 
 ## Input
 Expression matrix - first column is gene/protein/feature names (Identifier), other columns are samples.
@@ -68,12 +84,10 @@ Celltype_C_3|C
 
 # Execution
 ## Installation
-```
-pip install -r requirements.txt
-```
-Navigate to the parent directory where you wish your CellScribe tool to be
 
-Open git bash and run:
+Navigate to the parent directory where you wish your CellScribe to be
+
+Open git bash and type:
 
 ```
 git clone https://github.com/iinaraz/CellScribe.git
@@ -82,7 +96,25 @@ git clone https://github.com/iinaraz/CellScribe.git
 Alternatively, download the folder as a zip -file from the [CellScribe Github](https://github.com/iinaraz/CellScribe) --> <>Code --> Download ZIP
 
 
-## Running the program
+Or, alternatively, download ZIP from Github:
+CellScribe --> <> Code --> Download ZIP
+
+Navigate to the CellScribe directory
+
+```
+cd CellScribe
+```
+
+Install requirements by typing:
+
+```
+pip install -r requirements.txt
+```
+
+## Running the program from terminal
+
+**To run the program with example data, see `Running with example data`**
+
 ```
 # Navigate to the CellScribe repository
 cd <path_to_repository>
@@ -90,12 +122,27 @@ cd <path_to_repository>
 # See argument information by running
 python cellscribe.py --help
 
+  -h, --help            show this help message and exit
+  --data DATA           Path to the input expression matrix (csv). The first column should be named `Identifier` and contain identifiers for the molecules.
+  --populations POPULATIONS
+                        Path to the txt file of populations (txt). The file should contain columns `Label` that match to the sample column names in the data file, and a `Population` column that categorizes each label to a population.
+  --n_markers N_MARKERS
+                        Number of markers to select per population. Default is 30.
+  --fc_threshold FC_THRESHOLD
+                        Log2 fold change threshold for differential expression. Default is 0.
+  --pval_threshold PVAL_THRESHOLD
+                        Adjusted p-value threshold for differential expression. Default is 0.05.
+  --log2_transform LOG2_TRANSFORM
+                        Log2 transform fold changes in differential expression. Default is False.
+
+
 # Run CellScribe from command line
-python cellscribe.py --data PATH_TO_EXPRESSION_MATRIX --populations PATH_TO_POPULATION_INFO --n_markers N_MARKERS --fc_threshold LOG2_FC_THRESHOLD --pval_threshold ADJUSTED_PVALUE_THRESHOLD
+python cellscribe.py --data PATH_TO_EXPRESSION_MATRIX --populations PATH_TO_POPULATION_INFO --n_markers N_MARKERS --fc_threshold LOG2_FC_THRESHOLD --pval_threshold ADJUSTED_PVALUE_THRESHOLD --log2_transform FALSE
 ```
 
 Initiating CellScribe will create a folder in the current directory and store the results (see Output) in the directory.
 
+Note: `--data DATA_PATH` and `--populations POPULATIONS_PATH` are REQUIRED. Other parameters have default options and are optional.
 
 ## Running with example data
 
@@ -118,6 +165,15 @@ Data published by:
 Rieckmann JC, Geiger R, Hornburg D, Wolf T, Kveler K, Jarrossay D, Sallusto F, Shen-Orr SS, Lanzavecchia A, Mann M, Meissner F. Social network architecture of human immune cells unveiled by quantitative proteomics. Nat Immunol. 2017 May;18(5):583-593. doi: 10.1038/ni.3693. Epub 2017 Mar 6. PMID: 28263321.
 
 The data is a subset of sorted immune cell populations analyzed by mass spectrometry-based proteomics.
+
+To run the program with the example data, follow the steps for requirements installation and clone the repository as described above in `Execution`. Then run:
+
+```
+python cellscribe.py --data "data/proteins_subset.csv" --populations "data/sample_info.csv"
+```
+
+Parameters for arguments n_markers, fc_threshold and pval_threshold can be adjusted by choice.
+
 
 ## Output
 

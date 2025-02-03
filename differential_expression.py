@@ -10,7 +10,7 @@ from adjustText import adjust_text
 from tqdm import tqdm
 import warnings
 
-def population_differential_expression(data, population_mapping, output_dir, n_top_markers, fc_threshold, pval_threshold):
+def population_differential_expression(data, population_mapping, output_dir, n_top_markers, fc_threshold, pval_threshold, log2_transform=False):
 
     # ------------------ Section 1 -----------------------
     # Ensure the output directory exists
@@ -22,9 +22,9 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
     # Initialize a dictionary to store results
     results = {}
 
-    # ---------------- Section 2: Loop through cell types ----------------------------
+    # ---------------- Section 2: Loop through populations ----------------------------
     for group in tqdm(populations, desc="Generating signatures", unit="Population"):
-        # Define target cell type
+        # Define target population
         target_group = group
 
         # Create a mask for the target and the rest (t-test is one vs rest)
@@ -35,7 +35,7 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
         log_fold_changes=[]
         pvals=[]
 
-        # -------- Section 2.1: Perform t-test and store p-values and log2 FCs for each protein -----------
+        # -------- Section 2.1: Perform t-test and store p-values and log2 FCs for each molecule -----------
         for mol in data.index:
             target_data = data.loc[mol, target_columns]
             rest_data = data.loc[mol, rest_columns]
@@ -50,7 +50,10 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
             tstat, p_value = ttest_ind(target_data, rest_data, equal_var=equal_var)
     
             # Calculate log2 fold change
-            log2_fc = target_data.mean() - rest_data.mean()
+            if log2_transform==False:
+                log2_fc = target_data.mean() - rest_data.mean()
+            else:
+                log2_fc = np.log2(target_data.mean()/rest_data.mean())
     
             # Append results
             log_fold_changes.append(log2_fc)
@@ -59,10 +62,10 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
         # Correct the p-values for multiple comparisons (FDR adjustment)
         pvals_corrected = multipletests(pvals, method='fdr_bh')[1]
 
-        # --------- Section 2.2: Construct results dataframe for the cell type ------------------------
+        # --------- Section 2.2: Construct results dataframe for the population ------------------------
         # Create results DataFrame
         results_df = pd.DataFrame({
-            'Protein': data.index,
+            'Marker': data.index,
             'Log2FoldChange': log_fold_changes,
             'PValue': pvals,
             'PAdjusted': pvals_corrected
@@ -75,9 +78,10 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
         )
 
         # ---------- Section 2.3: Select top upregulated markers ------------------------------------
-        if len(results_df['Threshold']=='Up') > 0:
+        # If there are upregulated molecules for the given population
+        if (results_df['Threshold']=='Up').sum() > 0:
 
-            # Select upregulated proteins as markers
+            # Select upregulated molecules as markers
             significant_results = results_df[results_df['Threshold'] == 'Up']
 
             # Sort by Log2 Fold Change (descending) and p-value (ascending)
@@ -119,11 +123,11 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
 
         plt.axhline(-np.log10(0.05), color='#c04858', linestyle='--', label='p=0.05')
 
-        # Annotate the top proteins with adjusted text
+        # Annotate the top molecules
         texts = []
         for i, row in selected_markers.iterrows():
             texts.append(plt.text(row['Log2FoldChange'], -np.log10(row['PAdjusted']),
-                row['Protein'], fontsize=9, color='black', ha='center'))
+                row['Marker'], fontsize=9, color='black', ha='center'))
 
         # Adjust text to avoid overlaps
         adjust_text(texts, arrowprops=dict(arrowstyle="->", color='black'))

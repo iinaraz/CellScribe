@@ -9,10 +9,9 @@ import yaml
 
 def main():
 
+    # -------------------- INITIATE -----------------
     # Create output directory for results
     res_path = create_output_dir()
-
-    ## ----------------- SET UP ARGUMENTS -----------------------
 
     logo = """
 
@@ -24,6 +23,10 @@ def main():
 
 """
 
+        # Print logo
+    print(logo)
+
+    # ------------------ GET USER PARAMETERS -----------------
     # Create parser
     parser = argparse.ArgumentParser(description= "\nCellScribe generates differential expression -based marker signatures for predetermined populations using expression data from high-throughput technologies such as mass spectrometry based proteomics, single-cell RNA sequencing or RNA sequencing.",
                                      formatter_class=argparse.RawTextHelpFormatter)  # Preserves formatting)
@@ -36,6 +39,7 @@ def main():
     parser.add_argument("--n_markers", type=int, default=30, help="Number of markers to select per population. Default is 30.", required=False)
     parser.add_argument("--fc_threshold", type=float, default=0, help="Log2 fold change threshold for differential expression. Default is 0.", required=False)
     parser.add_argument("--pval_threshold", type=float, default=0.05, help="Adjusted p-value threshold for differential expression. Default is 0.05.", required=False)
+    parser.add_argument("--log2_transform", type=bool, default=False, help="Log2 transform fold changes in differential expression. Default is False.", required=False)
     args = parser.parse_args()
 
     # Save path to files from args
@@ -46,8 +50,9 @@ def main():
     n_markers=args.n_markers
     fc_threshold=args.fc_threshold
     pval_threshold=args.pval_threshold
+    log2_transform=args.log2_transform
 
-    # Save settings information
+    # ------------ SAVE SETTINGS INFORMATION --------------------
     settings = {
         "data": data_path,
         "populations": populations_path,
@@ -56,25 +61,24 @@ def main():
         "pval_threshold": pval_threshold
     }
 
+    # Save settings as yaml file to the results directory
     param_file_path = os.path.join(res_path, "param.yaml")
 
     with open(param_file_path, "w") as file:
         yaml.dump(settings, file)
 
-    # Print logo
-    print(logo)
-
     # -------------------- LOAD DATA --------------------------
     # Load data
     input = extract_input_data(data_path, populations_path)
 
+    # Separate to data and populations data frames
     data = input[0]
     populations = input[1]
 
     # ------------------ GENERATE SIGNATURES -------------------
 
     # Differential expression analysis one vs rest
-    DE_results = population_differential_expression(data, populations, output_dir=res_path, n_top_markers=n_markers, fc_threshold=fc_threshold, pval_threshold=pval_threshold)
+    DE_results = population_differential_expression(data, populations, output_dir=res_path, n_top_markers=n_markers, fc_threshold=fc_threshold, pval_threshold=pval_threshold, log2_transform=log2_transform)
     print(f"Signature results saved in: {res_path}/signatures.csv")
 
     # ----------------- SAVE RESULTS TO CSV ---------------------
