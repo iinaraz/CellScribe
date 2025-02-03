@@ -121,7 +121,7 @@ def population_differential_expression(data, population_mapping, output_dir, n_t
             alpha=0.6
         )
 
-        plt.axhline(-np.log10(0.05), color='#c04858', linestyle='--', label='p=0.05')
+        plt.axhline(-np.log10(pval_threshold), color='#c04858', linestyle='--', label=f"p={pval_threshold}")
 
         # Annotate the top molecules
         texts = []
