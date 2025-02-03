@@ -172,9 +172,32 @@ Rieckmann et al. used quantitative proteomics to map the interactions between hu
 
 A table with markers for each population and their differential expression results (signatures.csv)
 
+Marker|Log2FoldChange|PValue|PAdjusted|Threshold|Population
+---|---|---|---|---|---
+CD22|12.55|3E-09|7E-07|Up|B.naive
+MS4A1|11.61|4E-09|1E-06|Up|B.naive
+PAX5|10.64|2E-14|5E-11|Up|B.naive
+TCL1A|10.56|4E-04|7E-03|Up|B.naive
+CD79A|10.27|2E-19|2E-15|Up|B.naive
+CR2|9.24|3E-09|7E-07|Up|B.naive
+CD79B|9.13|1E-08|2E-06|Up|B.naive
+AKAP2|9.05|4E-11|2E-08|Up|B.naive
+CD19|8.87|3E-10|1E-07|Up|B.naive
+HLA-DOA|8.84|8E-10|3E-07|Up|B.naive
+HLA-DOB|8.72|1E-14|4E-11|Up|B.naive
+KMO|8.69|2E-05|7E-04|Up|B.naive
+CD72|8.63|6E-08|8E-06|Up|B.naive
+RALGPS2|8.35|6E-15|3E-11|Up|B.naive
+CD40|8.24|3E-08|5E-06|Up|B.naive
+*truncated table*
+
 Volcano plot of differential expression results for each population with selected markers labeled
 
+<img src="Volcano_B.naive.png" alt="Volcanoplot" width="600"/>
+
 Settings used in the analysis will be saved in settings.yaml in the results folder
+
+<img src="param.PNG" alt="Image of settings" width="500"/>
 
 ## Information
 
