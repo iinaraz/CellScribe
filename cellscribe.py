@@ -33,7 +33,7 @@ def main():
 
     # Add argument for expression matrix file and celltypes
     parser.add_argument("--data", type=str, help="Path to the input expression matrix (csv). The first column should be named `Identifier` and contain identifiers for the molecules.", required=True)
-    parser.add_argument("--populations", type=str, help="Path to the txt file of populations (txt). The file should contain columns `Label` that match to the sample column names in the data file, and a `Population` column that categorizes each label to a population.", required=True)
+    parser.add_argument("--populations", type=str, help="Path to the csv file of populations. The file should contain columns `Label` that match to the sample column names in the data file, and a `Population` column that categorizes each label to a population.", required=True)
 
     # Add optional arguments to control user parameters
     parser.add_argument("--n_markers", type=int, default=30, help="Number of markers to select per population. Default is 30.", required=False)
