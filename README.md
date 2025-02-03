@@ -193,11 +193,11 @@ CD40|8.24|3E-08|5E-06|Up|B.naive
 
 Volcano plot of differential expression results for each population with selected markers labeled
 
-<img src="Volcano_B.naive.png" alt="Volcanoplot" width="600"/>
+<img src="volcano_B.naive.png" alt="Volcanoplot" width="600"/>
 
 Settings used in the analysis will be saved in settings.yaml in the results folder
 
-<img src="param.PNG" alt="Image of settings" width="500"/>
+<img src="param.PNG" alt="Image of settings" width="400"/>
 
 ## Information
 
